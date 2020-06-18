@@ -116,12 +116,28 @@ def initialize_csv():
 # Function - Header
 # - - - - - - - - - - - - - - - - - - - -
 def header_process():
+
+    header_process_enumerate_localize()
+    
+    header_process_create_file()
+    
     return
 
 
 def header_process_enumerate_localize():
+    
+    csvReader = csv.reader(csvFileObject)
+    header = csvReader.next()
+    
+    for col in header[1:]:
+        localizations.append(col)
+
     return
 
+
+def header_process_create_file():
+    # TODO
+    return
 
 
 
