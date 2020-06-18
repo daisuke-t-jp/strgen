@@ -5,6 +5,8 @@ import sys
 import os
 import shutil
 import enum
+import csv
+
 
 
 # - - - - - - - - - - - - - - - - - - - -
@@ -66,6 +68,10 @@ def initialize():
     
     iinitialize_build_dir()
 
+    if not initialize_csv():
+        print('csv file does not open.')
+        sys.exit()
+
     return
 
 
@@ -74,23 +80,35 @@ def initialize_check_args():
     if len(args) < 3:
         return False
     
-    if not os.path.exists(csv_path()):
+    if not os.path.exists(path_csv()):
          return False
     
-    if not os.path.isdir(build_path_root()):
+    if not os.path.isdir(path_build_root()):
         return False
         
     return True
 
 
 def iinitialize_build_dir():
-    if os.path.isdir(build_path()):
-        shutil.rmtree(build_path())
-        return
+    if os.path.isdir(path_build()):
+        shutil.rmtree(path_build())
     
-    os.makedirs(build_path())
+    os.makedirs(path_build())
 
     return
+
+
+def initialize_csv():
+    if not os.path.isfile(path_csv()):
+        return False
+    
+    try:
+        with open(path_csv(), mode='r') as f:
+            csvFileObject = f
+    except Exception as e:
+        return False
+    
+    return True
 
 
 
@@ -113,3 +131,4 @@ def header_process_enumerate_localize():
 if __name__ == '__main__':
     initialize()
 
+    header_process()
