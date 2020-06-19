@@ -127,13 +127,13 @@ def process():
         
         key = row[0]
 
-        for i in range(1, len(row) - 1):
+        for i in range(1, len(row)):
             value = row[i]
             
             if len(value) == 0:
                 continue
-                
-            code = work.localizations[i]
+            
+            code = work.localizations[i - 1]
             
             google_strings_append(code, key, value)
             apple_strings_append(code, key, value)
