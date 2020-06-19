@@ -206,8 +206,7 @@ def google_initialize(localizations):
 
     for elm in localizations:
         # Create dir.
-        root_dir = os.path.join(path_build_google(), elm)
-        localize_dir = os.path.join(root_dir, DIR_NAME_PREFIX_GOOGLE + elm)
+        localize_dir = os.path.join(path_build_google(), DIR_NAME_PREFIX_GOOGLE + elm)
         os.makedirs(localize_dir)
         
         
@@ -253,8 +252,7 @@ def apple_initialize(localizations):
 
     for elm in localizations:
         # Create dir.
-        root_dir = os.path.join(path_build_apple(), elm)
-        localize_dir = os.path.join(root_dir, elm + DIR_NAME_SUFFIX_APPLE)
+        localize_dir = os.path.join(path_build_apple(), elm + DIR_NAME_SUFFIX_APPLE)
         os.makedirs(localize_dir)
 
 
