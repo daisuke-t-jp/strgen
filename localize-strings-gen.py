@@ -202,7 +202,7 @@ def google_initialize(localizations):
     text = '''\
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    '''
+'''
 
     for elm in localizations:
         # Create dir.
@@ -224,7 +224,7 @@ def google_finalize():
 
     text = '''\
 </resources>
-    '''
+'''
 
     for key in work.google_strings_file_map.keys():
         elm = work.google_strings_file_map[key]
