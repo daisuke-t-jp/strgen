@@ -120,14 +120,14 @@ def finalize():
 # - - - - - - - - - - - - - - - - - - - -
 def process():
 
-    csvReader = csv.reader(work.csv_file_object)
-    header = csvReader.next()   # Skip header
+    reader = csv.reader(work.csv_file_object)
+    header = next(reader)   # Skip header
     
     for row in reader:
         
         key = row[0]
 
-        for i in range(1, len(row)):
+        for i in range(1, len(row) - 1):
             value = row[i]
             
             if len(value) == 0:
@@ -163,8 +163,7 @@ def csv_initialize():
         return False
     
     try:
-        with open(path_csv(), mode='r') as f:
-            work.csv_file_object = f
+        work.csv_file_object = open(path_csv(), mode='r')
     except Exception as e:
         return False
     
@@ -173,6 +172,7 @@ def csv_initialize():
 
 def csv_finalize():
     work.csv_file_object.close()
+    work.csv_file_object = None
     
     return
 
@@ -184,8 +184,8 @@ def csv_finalize():
 def localize_initialize():
 
     # Enumerate localizations.
-    csvReader = csv.reader(work.csv_file_object)
-    header = csvReader.next()
+    reader = csv.reader(work.csv_file_object)
+    header = next(reader)
     
     for col in header[1:]:
         work.localizations.append(col)
@@ -214,9 +214,7 @@ def google_initialize(localizations):
         # Create file
         file_path = os.path.join(localize_dir, STRINGS_FILE_NAME_GOOGLE)
         
-        with open(file_path, mode='w', encoding='utf-8') as f:
-            work.google_strings_file_map[elm] = f
-    
+        work.google_strings_file_map[elm] = open(file_path, mode='w', encoding='utf-8')
         work.google_strings_file_map[elm].write(text)
     
     return
@@ -263,9 +261,7 @@ def apple_initialize(localizations):
         # Create file
         file_path = os.path.join(localize_dir, STRINGS_FILE_NAME_APPLE)
         
-        with open(file_path, mode='w', encoding='utf-8') as f:
-            work.apple_strings_file_map[elm] = f
-    
+        work.apple_strings_file_map[elm] = open(file_path, mode='w', encoding='utf-8')
     
     apple_swift_initialize()
     
@@ -304,9 +300,8 @@ def apple_swift_initialize():
 
     path = os.path.join(path_build_apple(), APPLE_SWIFT_FILE_NAME)
 
-    with open(path, mode='w', encoding='utf-8') as f:
-        work.apple_swift_file_object = f
-    
+    work.apple_swift_file_object = open(path, mode='w', encoding='utf-8')
+
     text = '''\
 import Foundation
 
