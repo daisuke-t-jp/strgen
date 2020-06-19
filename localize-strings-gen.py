@@ -45,15 +45,15 @@ work = Work()
 # Function - Path
 # - - - - - - - - - - - - - - - - - - - -
 def path_csv():
-    return sys.args[1]
+    return sys.argv[1]
 
 
 def path_build_root():
-    return sys.args[2]
+    return sys.argv[2]
 
 
 def path_build():
-    return os.path.join(build_path_root(), BUILD_DIR)
+    return os.path.join(path_build_root(), BUILD_DIR)
 
 
 def path_build_google():
@@ -89,8 +89,7 @@ def initialize():
 
 
 def initialize_check_args():
-    args = sys.argv
-    if len(args) < 3:
+    if len(sys.argv) < 3:
         return False
     
     if not os.path.exists(path_csv()):
