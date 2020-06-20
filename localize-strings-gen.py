@@ -20,6 +20,7 @@ NAME_APPLE = 'apple'
 
 DIR_NAME_PREFIX_GOOGLE = 'values-'
 DIR_NAME_SUFFIX_APPLE =  '.lproj'
+DIR_NAME_LPROJ = 'lproj'
 STRINGS_FILE_NAME_GOOGLE = 'strings.xml'
 STRINGS_FILE_NAME_APPLE = 'Localizable.strings'
 APPLE_SWIFT_FILE_NAME = 'LocalizableStrings.swift'
@@ -62,6 +63,9 @@ def path_build_google():
 
 def path_build_apple():
     return os.path.join(path_build(), NAME_APPLE)
+
+def path_build_apple_strings():
+    return os.path.join(path_build_apple(), DIR_NAME_LPROJ)
 
 
 
@@ -252,7 +256,7 @@ def apple_initialize(localizations):
 
     for elm in localizations:
         # Create dir.
-        localize_dir = os.path.join(path_build_apple(), elm + DIR_NAME_SUFFIX_APPLE)
+        localize_dir = os.path.join(path_build_apple_strings(), elm + DIR_NAME_SUFFIX_APPLE)
         os.makedirs(localize_dir)
 
 
