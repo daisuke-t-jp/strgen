@@ -130,7 +130,8 @@ def process():
     for row in reader:
         
         key = row[0]
-
+        appended_swift_file = False
+        
         for i in range(1, len(row)):
             value = row[i]
             
@@ -139,8 +140,18 @@ def process():
             
             code = work.localizations[i - 1]
             
+            
+            # Append to strings file
             google_strings_append(code, key, value)
             apple_strings_append(code, key, value)
+            
+            
+            # Append to swift file
+            if appended_swift_file:
+                continue
+            
+            appended_swift_file = True
+            apple_swift_append(key)
 
     return
 
@@ -289,8 +300,6 @@ def apple_strings_append(code, key, value):
     
     work.apple_strings_file_map[code].write(text)
 
-    apple_swift_append(key, value)
-
     return
 
 
@@ -321,7 +330,7 @@ def apple_swift_finalize():
 
     text = '''\
     }
-    
+
 }\
 '''
 
@@ -333,8 +342,8 @@ def apple_swift_finalize():
     return
 
 
-def apple_swift_append(key, value):
-    text = '        case {0} = \"{1}\"\n'.format(key, value)
+def apple_swift_append(key):
+    text = '        case {0} = \"{1}\"\n'.format(key, key)
     
     work.apple_swift_file_object.write(text)
     
