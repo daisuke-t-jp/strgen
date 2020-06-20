@@ -309,7 +309,7 @@ import Foundation
 
 class LocalizableStrings {
 
-    enum Key: String {\
+    enum Key: String {
 '''
 
     work.apple_swift_file_object.write(text)
@@ -321,7 +321,7 @@ def apple_swift_finalize():
 
     text = '''\
     }
-        
+    
 }\
 '''
 
