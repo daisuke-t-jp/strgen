@@ -296,7 +296,9 @@ def apple_finalize():
 
 
 def apple_strings_append(code, key, value):
-    text = '\"{0}\"=\"{1}\";\n'.format(key, value)
+    value_escaped = value.replace('"', '\\"')
+    
+    text = '\"{0}\"=\"{1}\";\n'.format(key, value_escaped)
     
     work.apple_strings_file_map[code].write(text)
 
