@@ -252,7 +252,16 @@ def google_finalize():
 
 
 def google_strings_append(code, key, value):
-    text = '    <string name=\"{0}\">{1}</string>\n'.format(key, value)
+    value_escaped = value
+    value_escaped = value_escaped.replace('\'', "\\'")
+    value_escaped = value_escaped.replace('"', '\\"')
+    value_escaped = value_escaped.replace('&', '&amp;')
+    value_escaped = value_escaped.replace('<', '&lt;')
+    value_escaped = value_escaped.replace('>', '&gt;')
+    value_escaped = value_escaped.replace('@', '\\@')
+    value_escaped = value_escaped.replace('?', '\\?')
+
+    text = '    <string name=\"{0}\">{1}</string>\n'.format(key, value_escaped)
     
     work.google_strings_file_map[code].write(text)
 
