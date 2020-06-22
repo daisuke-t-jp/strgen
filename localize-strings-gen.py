@@ -7,6 +7,8 @@ import shutil
 import enum
 import csv
 
+import yaml
+
 
 
 # - - - - - - - - - - - - - - - - - - - -
@@ -17,14 +19,25 @@ BUILD_DIR = 'build'
 NAME_GOOGLE = 'google'
 NAME_APPLE = 'apple'
 
+KEY_RESULT = 'result'
+KEY_MESSAGE = 'message'
 
 DIR_NAME_PREFIX_GOOGLE = 'values-'
 DIR_NAME_SUFFIX_APPLE =  '.lproj'
 DIR_NAME_LPROJ = 'lproj'
-STRINGS_FILE_NAME_GOOGLE = 'strings.xml'
-STRINGS_FILE_NAME_APPLE = 'Localizable.strings'
-APPLE_SWIFT_FILE_NAME = 'LocalizableStrings.swift'
 
+YAML_FILE_NAME = 'localize-strings-gen.yml'
+YAML_KEY_INPUT_FILE_PATH = 'input_file_path'
+YAML_KEY_OUTPUT_PATH = 'output_path'
+YAML_KEY_STRINGS_FILE_NAME = 'strings_file_name'
+YAML_KEY_GENERAL = 'general'
+YAML_KEY_APPLE = 'apple'
+YAML_KEY_APPLE_SWIFT_FILE_NAME = 'swift_file_name'
+YAML_KEY_GOOGLE = 'google'
+
+DEFAULT_STRINGS_FILE_NAME_GOOGLE = 'strings.xml'
+DEFAULT_STRINGS_FILE_NAME_APPLE = 'Localizable.strings'
+DEFAULT_APPLE_SWIFT_FILE_NAME = 'LocalizableStrings.swift'
 
 
 # - - - - - - - - - - - - - - - - - - - -
@@ -38,34 +51,13 @@ class Work:
     apple_strings_file_map = {}
     apple_swift_file_object = None
 
+    config_general_input_file_path = None
+    config_general_output_path = None
+    config_google_strings_file_name = None
+    config_apple_strings_file_name = None
+    config_apple_swift_file_name = None
+
 work = Work()
-
-
-
-# - - - - - - - - - - - - - - - - - - - -
-# Function - Path
-# - - - - - - - - - - - - - - - - - - - -
-def path_csv():
-    return sys.argv[1]
-
-
-def path_build_root():
-    return sys.argv[2]
-
-
-def path_build():
-    return os.path.join(path_build_root(), BUILD_DIR)
-
-
-def path_build_google():
-    return os.path.join(path_build(), NAME_GOOGLE)
-
-
-def path_build_apple():
-    return os.path.join(path_build(), NAME_APPLE)
-
-def path_build_apple_strings():
-    return os.path.join(path_build_apple(), DIR_NAME_LPROJ)
 
 
 
@@ -73,36 +65,105 @@ def path_build_apple_strings():
 # Function - Initialize
 # - - - - - - - - - - - - - - - - - - - -
 def initialize():
-    if not initialize_check_args():
-        print('invalid args.')
+
+    config_result = config_initialize()
+    
+    if not config_result[KEY_RESULT]:
+        print(config_result[KEY_MESSAGE])
         sys.exit()
     
     build_dir_initialize()
-
+    
     if not csv_initialize():
         print('csv file does not open.')
         sys.exit()
         
     localize_initialize()
-    
     google_initialize(work.localizations)
-    
     apple_initialize(work.localizations)
     
     return
 
 
-def initialize_check_args():
-    if len(sys.argv) < 3:
-        return False
+
+# - - - - - - - - - - - - - - - - - - - -
+# Function - Config(YAML)
+# - - - - - - - - - - - - - - - - - - - -
+def config_initialize():
     
-    if not os.path.exists(path_csv()):
-         return False
+    # Load file
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), YAML_FILE_NAME)
     
-    if not os.path.isdir(path_build_root()):
-        return False
+    if len(sys.argv) > 1:
+        path = sys.argv[1]
+    
+    try:
+        file = open(path, 'r')
+    except Exception as e:
+        return {KEY_RESULT: False,
+                KEY_MESSAGE: 'config file does not open.'}
+    
+    
+    # Get configuration
+    config = yaml.load(stream=file, Loader=yaml.SafeLoader)
+    
+    # Get general
+    general = config.get(YAML_KEY_GENERAL)
+    if general is None:
+        return {KEY_RESULT: False,
+                KEY_MESSAGE: 'config file does not have \'general\'.'}
+    
+    # Input file path
+    work.config_general_input_file_path = general.get(YAML_KEY_INPUT_FILE_PATH)
+    if work.config_general_input_file_path is None:
+        return {KEY_RESULT: False,
+                KEY_MESSAGE: 'config file does not have \'input_file_path\'.'}
+    
+    # Output path
+    work.config_general_output_path = general.get(YAML_KEY_OUTPUT_PATH)
+    if work.config_general_output_path is None:
+        work.config_general_output_path = os.path.dirname(os.path.abspath(__file__))
+    
+    # Google strings file name
+    work.config_google_strings_file_name = config[YAML_KEY_GOOGLE][YAML_KEY_STRINGS_FILE_NAME]
+    if work.config_google_strings_file_name is None:
+        work.config_google_strings_file_name = DEFAULT_STRINGS_FILE_NAME_GOOGLE
         
-    return True
+    # Apple strings file name
+    work.config_apple_strings_file_name = config[YAML_KEY_APPLE][YAML_KEY_STRINGS_FILE_NAME]
+    if work.config_apple_strings_file_name is None:
+        work.config_apple_strings_file_name = DEFAULT_STRINGS_FILE_NAME_APPLE
+
+    # Apple swift file name
+    work.config_apple_swift_file_name = config[YAML_KEY_APPLE][YAML_KEY_APPLE_SWIFT_FILE_NAME]
+    if work.config_apple_swift_file_name is None:
+        work.config_apple_swift_file_name = DEFAULT_APPLE_SWIFT_FILE_NAME
+    
+    
+    file.close()
+    
+    return {KEY_RESULT: True}
+
+
+def config_finalize():
+    # NOP
+    return
+
+
+def config_path_output_build():
+    return os.path.join(work.config_general_output_path, BUILD_DIR)
+
+
+def config_path_output_build_google():
+    return os.path.join(config_path_output_build(), NAME_GOOGLE)
+
+
+def config_path_output_build_apple():
+    return os.path.join(config_path_output_build(), NAME_APPLE)
+
+
+def config_path_output_build_apple_strings():
+    return os.path.join(config_path_output_build_apple(), DIR_NAME_LPROJ)
 
 
 
@@ -111,6 +172,7 @@ def initialize_check_args():
 # - - - - - - - - - - - - - - - - - - - -
 def finalize():
     
+    config_finalize()
     csv_finalize()
     google_finalize()
     apple_finalize()
@@ -161,10 +223,12 @@ def process():
 # Function - Build directory
 # - - - - - - - - - - - - - - - - - - - -
 def build_dir_initialize():
-    if os.path.isdir(path_build()):
-        shutil.rmtree(path_build())
+    path = config_path_output_build()
+    
+    if os.path.isdir(path):
+        shutil.rmtree(path)
 
-    os.makedirs(path_build())
+    os.makedirs(path)
 
     return
 
@@ -174,11 +238,11 @@ def build_dir_initialize():
 # Function - CSV
 # - - - - - - - - - - - - - - - - - - - -
 def csv_initialize():
-    if not os.path.isfile(path_csv()):
+    if not os.path.isfile(work.config_general_input_file_path):
         return False
     
     try:
-        work.csv_file_object = open(path_csv(), mode='r')
+        work.csv_file_object = open(work.config_general_input_file_path, mode='r')
     except Exception as e:
         return False
     
@@ -221,12 +285,12 @@ def google_initialize(localizations):
 
     for elm in localizations:
         # Create dir.
-        localize_dir = os.path.join(path_build_google(), DIR_NAME_PREFIX_GOOGLE + elm)
+        localize_dir = os.path.join(config_path_output_build_google(), DIR_NAME_PREFIX_GOOGLE + elm)
         os.makedirs(localize_dir)
         
         
         # Create file
-        file_path = os.path.join(localize_dir, STRINGS_FILE_NAME_GOOGLE)
+        file_path = os.path.join(localize_dir, work.config_google_strings_file_name)
         
         work.google_strings_file_map[elm] = open(file_path, mode='w', encoding='utf-8')
         work.google_strings_file_map[elm].write(text)
@@ -276,12 +340,12 @@ def apple_initialize(localizations):
 
     for elm in localizations:
         # Create dir.
-        localize_dir = os.path.join(path_build_apple_strings(), elm + DIR_NAME_SUFFIX_APPLE)
+        localize_dir = os.path.join(config_path_output_build_apple_strings(), elm + DIR_NAME_SUFFIX_APPLE)
         os.makedirs(localize_dir)
 
 
         # Create file
-        file_path = os.path.join(localize_dir, STRINGS_FILE_NAME_APPLE)
+        file_path = os.path.join(localize_dir, work.config_apple_strings_file_name)
         
         work.apple_strings_file_map[elm] = open(file_path, mode='w', encoding='utf-8')
     
@@ -320,7 +384,7 @@ def apple_strings_append(code, key, value):
 # - - - - - - - - - - - - - - - - - - - -
 def apple_swift_initialize():
 
-    path = os.path.join(path_build_apple(), APPLE_SWIFT_FILE_NAME)
+    path = os.path.join(config_path_output_build_apple(), work.config_apple_swift_file_name)
 
     work.apple_swift_file_object = open(path, mode='w', encoding='utf-8')
 
