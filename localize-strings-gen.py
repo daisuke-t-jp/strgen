@@ -31,13 +31,16 @@ YAML_KEY_INPUT_FILE_PATH = 'input_file_path'
 YAML_KEY_OUTPUT_PATH = 'output_path'
 YAML_KEY_STRINGS_FILE_NAME = 'strings_file_name'
 YAML_KEY_GENERAL = 'general'
+YAML_KEY_GOOGLE = 'google'
 YAML_KEY_APPLE = 'apple'
 YAML_KEY_APPLE_SWIFT_FILE_NAME = 'swift_file_name'
-YAML_KEY_GOOGLE = 'google'
+YAML_KEY_APPLE_SWIFT_CLASS_NAME = 'swift_class_name'
 
 DEFAULT_STRINGS_FILE_NAME_GOOGLE = 'strings.xml'
 DEFAULT_STRINGS_FILE_NAME_APPLE = 'Localizable.strings'
 DEFAULT_APPLE_SWIFT_FILE_NAME = 'LocalizableStrings.swift'
+DEFAULT_APPLE_SWIFT_CLASS_NAME = 'LocalizableStrings'
+
 
 
 # - - - - - - - - - - - - - - - - - - - -
@@ -56,6 +59,7 @@ class Work:
     config_google_strings_file_name = None
     config_apple_strings_file_name = None
     config_apple_swift_file_name = None
+    config_apple_swift_class_name = None
 
 work = Work()
 
@@ -139,7 +143,11 @@ def config_initialize():
     if work.config_apple_swift_file_name is None:
         work.config_apple_swift_file_name = DEFAULT_APPLE_SWIFT_FILE_NAME
     
-    
+    # Apple swift class name
+    work.config_apple_swift_class_name = config[YAML_KEY_APPLE][YAML_KEY_APPLE_SWIFT_CLASS_NAME]
+    if work.config_apple_swift_class_name is None:
+        work.config_apple_swift_class_name = DEFAULT_APPLE_SWIFT_CLASS_NAME
+
     file.close()
     
     return {KEY_RESULT: True}
@@ -391,11 +399,12 @@ def apple_swift_initialize():
     text = '''\
 import Foundation
 
-class LocalizableStrings {
+class {class_name} {
 
     enum Key: String {
 '''
-
+    text = text.replace('{class_name}', work.config_apple_swift_class_name)
+    
     work.apple_swift_file_object.write(text)
     
     return
