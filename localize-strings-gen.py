@@ -111,6 +111,7 @@ def config_initialize():
     # Get configuration
     config = yaml.load(stream=file, Loader=yaml.SafeLoader)
     
+    
     # Get general
     general = config.get(YAML_KEY_GENERAL)
     if general is None:
@@ -128,26 +129,41 @@ def config_initialize():
     if work.config_general_output_path is None:
         work.config_general_output_path = os.path.dirname(os.path.abspath(__file__))
     
+    
+    # Get google
+    google = config.get(YAML_KEY_GOOGLE)
+    if google is None:
+        return {KEY_RESULT: False,
+                KEY_MESSAGE: 'config file does not have \'google\'.'}
+    
     # Google strings file name
-    work.config_google_strings_file_name = config[YAML_KEY_GOOGLE][YAML_KEY_STRINGS_FILE_NAME]
+    work.config_google_strings_file_name = google.get(YAML_KEY_STRINGS_FILE_NAME)
     if work.config_google_strings_file_name is None:
         work.config_google_strings_file_name = DEFAULT_STRINGS_FILE_NAME_GOOGLE
-        
+    
+    
+    # Get apple
+    apple = config.get(YAML_KEY_APPLE)
+    if apple is None:
+        return {KEY_RESULT: False,
+                KEY_MESSAGE: 'config file does not have \'apple\'.'}
+    
     # Apple strings file name
-    work.config_apple_strings_file_name = config[YAML_KEY_APPLE][YAML_KEY_STRINGS_FILE_NAME]
+    work.config_apple_strings_file_name = apple.get(YAML_KEY_STRINGS_FILE_NAME)
     if work.config_apple_strings_file_name is None:
         work.config_apple_strings_file_name = DEFAULT_STRINGS_FILE_NAME_APPLE
-
+    
     # Apple swift file name
-    work.config_apple_swift_file_name = config[YAML_KEY_APPLE][YAML_KEY_APPLE_SWIFT_FILE_NAME]
+    work.config_apple_swift_file_name = apple.get(YAML_KEY_APPLE_SWIFT_FILE_NAME)
     if work.config_apple_swift_file_name is None:
         work.config_apple_swift_file_name = DEFAULT_APPLE_SWIFT_FILE_NAME
     
     # Apple swift class name
-    work.config_apple_swift_class_name = config[YAML_KEY_APPLE][YAML_KEY_APPLE_SWIFT_CLASS_NAME]
+    work.config_apple_swift_class_name = apple.get(YAML_KEY_APPLE_SWIFT_CLASS_NAME)
     if work.config_apple_swift_class_name is None:
         work.config_apple_swift_class_name = DEFAULT_APPLE_SWIFT_CLASS_NAME
-
+    
+    
     file.close()
     
     return {KEY_RESULT: True}
