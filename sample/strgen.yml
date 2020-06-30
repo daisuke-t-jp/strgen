@@ -1,5 +1,5 @@
 general:
-  input_file_path: sample/localize.csv
+  input_file_path: sample/source.csv
   output_path: sample/
 google:
   strings_file_name2: strings.xml
