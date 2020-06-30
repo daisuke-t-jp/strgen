@@ -1,4 +1,4 @@
-# localize-strings-gen
+# strgen
 
 ## Dependency
  

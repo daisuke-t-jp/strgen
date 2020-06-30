@@ -26,7 +26,7 @@ DIR_NAME_PREFIX_GOOGLE = 'values-'
 DIR_NAME_SUFFIX_APPLE =  '.lproj'
 DIR_NAME_LPROJ = 'lproj'
 
-YAML_FILE_NAME = 'localize-strings-gen.yml'
+YAML_FILE_NAME = 'strgen.yml'
 YAML_KEY_INPUT_FILE_PATH = 'input_file_path'
 YAML_KEY_OUTPUT_PATH = 'output_path'
 YAML_KEY_STRINGS_FILE_NAME = 'strings_file_name'
