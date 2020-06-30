@@ -1,0 +1,9 @@
+general:
+  input_file_path: sample/localize.csv
+  output_path: sample/
+google:
+  strings_file_name2: strings.xml
+apple:
+  strings_file_name: Localizable.strings
+  swift_file_name: LocalizableStrings.swift
+  swift_class_name: LocalizableStrings

@@ -1,0 +1,8 @@
+id,en,ja-JP,zh-Hans,zh-Hant
+hello_world,Hello world,こんにちは世界,你好，世界,你好，世界
+yes,Yes,はい,是,是
+no,No,いいえ,没有,沒有
+cancel,Cancel,キャンセル,取消,取消
+next,Next,次へ,下一个,下一個
+close,Close,閉じる,关,關
+escape_test,"escape <'""&?@> test",,,
