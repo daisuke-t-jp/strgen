@@ -48,6 +48,7 @@ $ python strgen.py strgen.yml
 ```
 
 Run with argument of YAML file path.
+If not specified, `strgen.yml` in the current directory will be used.
 
 The following files will be generated under the `build` folder.
 
@@ -154,7 +155,7 @@ Input CSV file path.
 ##### `output_path` (Optional)
 
 Output path.  
-Default directory is same as `strgen.py`.
+Default directory is current directory
 
 
 #### `google`
