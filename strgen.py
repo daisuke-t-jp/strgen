@@ -96,7 +96,7 @@ def initialize():
 def config_initialize():
     
     # Load file
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), YAML_FILE_NAME)
+    path = os.path.join(os.getcwd(), YAML_FILE_NAME)
     
     if len(sys.argv) > 1:
         path = sys.argv[1]
@@ -127,7 +127,7 @@ def config_initialize():
     # Output path
     work.config_general_output_path = general.get(YAML_KEY_OUTPUT_PATH)
     if work.config_general_output_path is None:
-        work.config_general_output_path = os.path.dirname(os.path.abspath(__file__))
+        work.config_general_output_path = os.getcwd()
     
     
     # Get google
