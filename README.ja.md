@@ -1,6 +1,6 @@
-# strgen
-
 [English](https://github.com/daisuke-t-jp/strgen/blob/master/README.md)
+
+# strgen
 
 ## 概要
 
