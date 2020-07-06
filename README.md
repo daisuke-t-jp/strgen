@@ -1,3 +1,5 @@
+[日本語](https://github.com/daisuke-t-jp/strgen/blob/master/README.ja.md)
+
 # strgen
 
 ## Overview
