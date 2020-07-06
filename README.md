@@ -34,7 +34,7 @@ The source file of multi language strings.
 
 #### YAML file
 
-The config file that specifies output format.
+The config file.
 
 - [Format](#YAML-format)
 - [Sample](https://github.com/daisuke-t-jp/strgen/blob/master/sample/strgen.yml)
@@ -47,7 +47,7 @@ The config file that specifies output format.
 $ python strgen.py strgen.yml 
 ```
 
-Run with argument of YAML file path.
+Run with argument of YAML file path.  
 If not specified, `strgen.yml` in the current directory will be used.
 
 The following files will be generated under the `build` folder.
@@ -124,10 +124,10 @@ Next, add the language (language and country code).
 #### Body
 
 The `id` string will be the key to reference on iOS / Android.  
-Please add character strings for each language.
+Enter the localized string for each language.
 
-The key value can be empty.
-(No key is generated in that language)
+You can leave the localized string blank.  
+In that case, no localized strings are generated for that language.
 
 
 ### YAML format
