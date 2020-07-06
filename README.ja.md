@@ -1,5 +1,7 @@
 # strgen
 
+[English](https://github.com/daisuke-t-jp/strgen/blob/master/README.md)
+
 ## 概要
 
 <img src="https://raw.githubusercontent.com/daisuke-t-jp/strgen/master/images/strgen.png" width="700px">
