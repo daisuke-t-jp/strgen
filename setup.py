@@ -15,10 +15,6 @@ def _requirements():
     return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt')).readlines()]
 
 
-def _test_requirements():
-    return [name.rstrip() for name in open(path.join(root_dir, 'requirements.txt')).readlines()]
-
-
 with open(path.join(root_dir, package_name, '__init__.py')) as f:
     init_text = f.read()
     version = re.search(r'__version__\s*=\s*[\'\"](.+?)[\'\"]', init_text).group(1)
@@ -40,22 +36,19 @@ with open('README.md', encoding='utf-8') as f:
 setup(
     name=package_name,
     packages=[package_name],
-
     version=version,
-
     license=license,
-
     install_requires=_requirements(),
-    tests_require=_test_requirements(),
-
     author=author,
     author_email=author_email,
-
     url=url,
-
     description='The generate tool of iOS / Android localized strings.',
-    long_description=long_description,
-    
+    long_description=long_description,    
+    entry_points={
+        "console_scripts": [
+            "strgen=strgen.strgen:main",
+        ]
+    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
