@@ -9,14 +9,14 @@
 **strgen** は Android / iOS の多言語ファイルを CSV ファイルから作成できます。
 
 
-## 依存関係
+## インストール
 
-Python 3.x 系で開発しています。
+https://pypi.org/project/strgen/
 
-以下のパッケージをインストールする必要があります。
+`pip` を使ってインストールできます。
 
 ```sh
-$ pip install pyyaml
+$ pip install strgen
 ```
 
 
@@ -43,10 +43,10 @@ $ pip install pyyaml
 
 
 
-### 2. `strgen.py` を実行
+### 2. `strgen` を実行
 
 ```sh
-$ python strgen.py strgen.yml 
+$ strgen strgen.yml 
 ```
 
 YAML ファイルを引数にして、実行します。  
@@ -80,6 +80,8 @@ class LocalizableStrings {
         case next = "next"
         case close = "close"
         case escape_test = "escape_test"
+        case parameter_google = "parameter_google"
+        case parameter_apple = "parameter_apple"
     }
 
 }
@@ -92,12 +94,16 @@ class LocalizableStrings {
 
 [サンプル](https://github.com/daisuke-t-jp/strgen/tree/master/sample)
 
-1. カレントディレクトリを `strgen` フォルダのルートに変更します。
+1. プロジェクトを clone します。
+    ```sh
+    $ git clone https://github.com/daisuke-t-jp/strgen
+    ```
+1. カレントディレクトリを `strgen/sample` フォルダに変更します。
 1. 以下のコマンドを実行。
     ```sh
-    $ python strgen.py sample/strgen.yml 
+    $ strgen strgen.yml 
     ```
-1. `sample/build` フォルダを確認します。
+1. `build` フォルダを確認します。
 
 
 
@@ -114,6 +120,8 @@ class LocalizableStrings {
 | next | Next | キャンセル | 下一个 | 下一個 | ... |
 | close | Next | キャンセル | 下一个 | 下一個 | ... |
 | escape_test | escape <'""&?@> test | | | | | ... |
+| parameter_google | Parameter %1$s, %2$s. | | | | | ... |
+| parameter_apple | Parameter %1$@, %2$@. | | | | | ... |
 
 
 #### ヘッダ
@@ -137,8 +145,8 @@ class LocalizableStrings {
 
 ```yml
 general:
-  input_file_path: sample/source.csv
-  output_path: sample/
+  input_file_path: ./source.csv
+  output_path: ./
 google:
   strings_file_name: strings.xml
 apple:
