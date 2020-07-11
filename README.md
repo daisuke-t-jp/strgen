@@ -9,14 +9,14 @@
 The **strgen** can create iOS / Android strings file from CSV file.
 
 
-## Dependency
+## Install
  
-Using Python 3.x.
+https://pypi.org/project/strgen/
 
-Install packages.
+The strgen can install using `pip`.
 
 ```sh
-$ pip install pyyaml
+$ pip install strgen
 ```
 
 
@@ -43,10 +43,10 @@ The config file.
 
 
 
-### 2. Run `strgen.py`
+### 2. Run `strgen`
 
 ```sh
-$ python strgen.py strgen.yml 
+$ strgen strgen.yml 
 ```
 
 Run with argument of YAML file path.  
@@ -81,6 +81,8 @@ class LocalizableStrings {
         case next = "next"
         case close = "close"
         case escape_test = "escape_test"
+        case parameter_google = "parameter_google"
+        case parameter_apple = "parameter_apple"
     }
 
 }
@@ -93,12 +95,16 @@ There are sample that you can easily try.
 
 [Sample](https://github.com/daisuke-t-jp/strgen/tree/master/sample)
 
-1. Change the current directory to the root of `strgen`.
+1. Clone project.
+    ```sh
+    $ git clone https://github.com/daisuke-t-jp/strgen 
+    ```
+1. Change the current directory to `strgen/sample`.
 1. Run
     ```sh
-    $ python strgen.py sample/strgen.yml 
+    $ strgen strgen.yml 
     ```
-1. Check `sample/build` folder.
+1. Check `build` folder.
 
 
 
@@ -115,6 +121,8 @@ There are sample that you can easily try.
 | next | Next | キャンセル | 下一个 | 下一個 | ... |
 | close | Next | キャンセル | 下一个 | 下一個 | ... |
 | escape_test | escape <'""&?@> test | | | | | ... |
+| parameter_google | Parameter %1$s, %2$s. | | | | | ... |
+| parameter_apple | Parameter %1$@, %2$@. | | | | | ... |
 
 
 #### Header
@@ -138,8 +146,8 @@ In that case, no localized strings are generated for that language.
 
 ```yml
 general:
-  input_file_path: sample/source.csv
-  output_path: sample/
+  input_file_path: ./source.csv
+  output_path: ./
 google:
   strings_file_name: strings.xml
 apple:
