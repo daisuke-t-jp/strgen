@@ -1,6 +1,6 @@
 general:
-  input_file_path: sample/source.csv
-  output_path: sample/
+  input_file_path: ./source.csv
+  output_path: ./
 google:
   strings_file_name: strings.xml
 apple:
