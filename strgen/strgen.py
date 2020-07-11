@@ -454,10 +454,11 @@ def apple_swift_append(key):
 # - - - - - - - - - - - - - - - - - - - -
 # Function - Main
 # - - - - - - - - - - - - - - - - - - - -
-if __name__ == '__main__':
-
+def main():
     initialize()
-    
     process()
-    
     finalize()
+
+
+if __name__ == '__main__':
+    main()
