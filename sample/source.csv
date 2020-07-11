@@ -6,3 +6,5 @@ cancel,Cancel,キャンセル,取消,取消
 next,Next,次へ,下一个,下一個
 close,Close,閉じる,关,關
 escape_test,"escape <'""&?@> test",,,
+parameter_google,"Parameter %1$s, %2$s.",,,
+parameter_apple,"Parameter %1$@, %2$@.",,,
