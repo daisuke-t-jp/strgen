@@ -4,7 +4,6 @@
 import sys
 import os
 import shutil
-import enum
 import csv
 
 import yaml
