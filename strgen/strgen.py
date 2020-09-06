@@ -210,7 +210,6 @@ def finalize():
 def process():
 
     reader = csv.reader(work.csv_file_object)
-    header = next(reader)   # Skip header
     
     for row in reader:
         
