@@ -94,14 +94,14 @@ def initialize():
 # - - - - - - - - - - - - - - - - - - - -
 def config_initialize():
     
-    # Load file
-    path = os.path.join(os.getcwd(), YAML_FILE_NAME)
+    # Load config file
+    config_path = os.path.join(os.getcwd(), YAML_FILE_NAME)
     
     if len(sys.argv) > 1:
-        path = sys.argv[1]
+        config_path = sys.argv[1]
     
     try:
-        file = open(path, 'r')
+        file = open(config_path, 'r')
     except Exception as e:
         return {KEY_RESULT: False,
                 KEY_MESSAGE: 'config file does not open.'}
@@ -117,17 +117,27 @@ def config_initialize():
         return {KEY_RESULT: False,
                 KEY_MESSAGE: 'config file does not have \'general\'.'}
     
+    
     # Input file path
     work.config_general_input_file_path = general.get(YAML_KEY_INPUT_FILE_PATH)
     if work.config_general_input_file_path is None:
         return {KEY_RESULT: False,
                 KEY_MESSAGE: 'config file does not have \'input_file_path\'.'}
-    
+
+    if not os.path.isabs(work.config_general_input_file_path):
+        # For relative path, use config file path.
+        work.config_general_input_file_path = os.path.join(os.path.dirname(config_path), work.config_general_input_file_path)
+
+
     # Output path
     work.config_general_output_path = general.get(YAML_KEY_OUTPUT_PATH)
     if work.config_general_output_path is None:
         work.config_general_output_path = os.getcwd()
-    
+
+    if not os.path.isabs(work.config_general_output_path):
+        # For relative path, use config file path.
+        work.config_general_output_path = os.path.join(os.path.dirname(config_path), work.config_general_output_path)
+
     
     # Get google
     google = config.get(YAML_KEY_GOOGLE)
