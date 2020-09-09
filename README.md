@@ -165,7 +165,7 @@ Input CSV file path.
 ##### `output_path` (Optional)
 
 Output path.  
-Default directory is current directory
+The default directory will be the same as the YAML file.
 
 
 #### `google`
