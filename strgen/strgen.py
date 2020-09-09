@@ -132,7 +132,7 @@ def config_initialize():
     # Output path
     work.config_general_output_path = general.get(YAML_KEY_OUTPUT_PATH)
     if work.config_general_output_path is None:
-        work.config_general_output_path = os.getcwd()
+        work.config_general_output_path = os.path.dirname(config_path)
 
     if not os.path.isabs(work.config_general_output_path):
         # For relative path, use config file path.
