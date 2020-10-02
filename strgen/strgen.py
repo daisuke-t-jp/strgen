@@ -451,7 +451,7 @@ def apple_swift_finalize():
 
 
 def apple_swift_append(key):
-    text = '        case {0} = \"{1}\"\n'.format(key, key)
+    text = '        case {0}\n'.format(key)
     
     work.apple_swift_file_object.write(text)
     
