@@ -439,7 +439,7 @@ def apple_swift_finalize():
     text = '''\
     }
 
-}\
+}
 '''
 
     work.apple_swift_file_object.write(text)
