@@ -75,14 +75,14 @@ import Foundation
 class LocalizableStrings {
 
     enum Key: String {
-        case yes = "yes"
-        case no = "no"
-        case cancel = "cancel"
-        case next = "next"
-        case close = "close"
-        case escape_test = "escape_test"
-        case parameter_google = "parameter_google"
-        case parameter_apple = "parameter_apple"
+        case yes
+        case no
+        case cancel
+        case next
+        case close
+        case escape_test
+        case parameter_google
+        case parameter_apple
     }
 
 }
