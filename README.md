@@ -66,8 +66,7 @@ The following files will be generated under the `build` folder.
         - values-ja-JP/strings.xml
         - ...
 
-in `apple` folder(for iOS/macOS),  
-`LocalizableStrings.swift` that enumerated the key names is also generated.
+in `apple` folder(for iOS/macOS), `LocalizableStrings.swift` that enumerated the key names is also generated.
 
 ```swift
 import Foundation
@@ -150,8 +149,10 @@ general:
   input_file_path: ./source.csv
   output_path: ./
 google:
+  enabled: true
   strings_file_name: strings.xml
 apple:
+  enabled: true
   strings_file_name: Localizable.strings
   swift_file_name: LocalizableStrings.swift
   swift_class_name: LocalizableStrings
@@ -171,6 +172,11 @@ The default directory will be the same as the YAML file.
 
 #### `google`
 
+##### `enabled` (任意)
+
+Enabled flag for generate output files.  
+Default is `true`.
+
 ##### `strings_file_name` (Optional)
 
 Generated strings file's name.  
@@ -178,6 +184,11 @@ Default is `strings.xml`.
 
 
 #### `apple`
+
+##### `enabled` (任意)
+
+Enabled flag for generate output files.  
+Default is `true`.
 
 ##### `strings_file_name` (Optional)
 
