@@ -149,8 +149,10 @@ general:
   input_file_path: ./source.csv
   output_path: ./
 google:
+  enabled: true
   strings_file_name: strings.xml
 apple:
+  enabled: true
   strings_file_name: Localizable.strings
   swift_file_name: LocalizableStrings.swift
   swift_class_name: LocalizableStrings
@@ -170,6 +172,11 @@ apple:
 
 #### `google`
 
+##### `enabled` (任意)
+
+出力ファイルを生成するかどうかのフラグ。  
+デフォルトは `true` です。
+
 ##### `strings_file_name` (任意)
 
 生成された多言語ファイルの名前。  
@@ -177,6 +184,11 @@ apple:
 
 
 #### `apple`
+
+##### `enabled` (任意)
+
+出力ファイルを生成するかどうかのフラグ。  
+デフォルトは `true` です。
 
 ##### `strings_file_name` (任意)
 
