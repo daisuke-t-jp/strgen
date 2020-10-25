@@ -29,8 +29,12 @@ YAML_FILE_NAME = 'strgen.yml'
 YAML_KEY_INPUT_FILE_PATH = 'input_file_path'
 YAML_KEY_OUTPUT_PATH = 'output_path'
 YAML_KEY_STRINGS_FILE_NAME = 'strings_file_name'
+YAML_KEY_ENABLED = 'enabled'
+
 YAML_KEY_GENERAL = 'general'
+
 YAML_KEY_GOOGLE = 'google'
+
 YAML_KEY_APPLE = 'apple'
 YAML_KEY_APPLE_SWIFT_FILE_NAME = 'swift_file_name'
 YAML_KEY_APPLE_SWIFT_CLASS_NAME = 'swift_class_name'
@@ -55,7 +59,11 @@ class Work:
 
     config_general_input_file_path = None
     config_general_output_path = None
+    
+    config_google_enabled = None
     config_google_strings_file_name = None
+    
+    config_apple_enabled = None
     config_apple_strings_file_name = None
     config_apple_swift_file_name = None
     config_apple_swift_class_name = None
@@ -145,6 +153,11 @@ def config_initialize():
         return {KEY_RESULT: False,
                 KEY_MESSAGE: 'config file does not have \'google\'.'}
     
+    # Google enabled
+    work.config_google_enabled = google.get(YAML_KEY_ENABLED)
+    if work.config_google_enabled is None:
+        work.config_google_enabled = True
+    
     # Google strings file name
     work.config_google_strings_file_name = google.get(YAML_KEY_STRINGS_FILE_NAME)
     if work.config_google_strings_file_name is None:
@@ -156,6 +169,11 @@ def config_initialize():
     if apple is None:
         return {KEY_RESULT: False,
                 KEY_MESSAGE: 'config file does not have \'apple\'.'}
+    
+    # Apple enabled
+    work.config_apple_enabled = apple.get(YAML_KEY_ENABLED)
+    if work.config_apple_enabled is None:
+        work.config_apple_enabled = True
     
     # Apple strings file name
     work.config_apple_strings_file_name = apple.get(YAML_KEY_STRINGS_FILE_NAME)
@@ -309,7 +327,10 @@ def localize_initialize():
 # Function - Google
 # - - - - - - - - - - - - - - - - - - - -
 def google_initialize(localizations):
-
+    if not work.config_google_enabled:
+        return
+    
+    
     text = '''\
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -331,7 +352,10 @@ def google_initialize(localizations):
 
 
 def google_finalize():
-
+    if not work.config_google_enabled:
+        return
+    
+    
     text = '''\
 </resources>
 '''
@@ -348,6 +372,10 @@ def google_finalize():
 
 
 def google_strings_append(code, key, value):
+    if not work.config_google_enabled:
+        return
+    
+    
     value_escaped = value
     value_escaped = value_escaped.replace('\'', "\\'")
     value_escaped = value_escaped.replace('"', '\\"')
@@ -369,7 +397,10 @@ def google_strings_append(code, key, value):
 # Function - Apple
 # - - - - - - - - - - - - - - - - - - - -
 def apple_initialize(localizations):
-
+    if not work.config_apple_enabled:
+        return
+    
+    
     for elm in localizations:
         # Create dir.
         localize_dir = os.path.join(config_path_output_build_apple_strings(), elm + DIR_NAME_SUFFIX_APPLE)
@@ -387,7 +418,10 @@ def apple_initialize(localizations):
 
 
 def apple_finalize():
-
+    if not work.config_apple_enabled:
+        return
+    
+    
     for key in work.apple_strings_file_map.keys():
         elm = work.apple_strings_file_map[key]
         
@@ -401,6 +435,10 @@ def apple_finalize():
 
 
 def apple_strings_append(code, key, value):
+    if not work.config_apple_enabled:
+        return
+    
+    
     value_escaped = value.replace('"', '\\"')
     
     text = '\"{0}\"=\"{1}\";\n'.format(key, value_escaped)
@@ -451,6 +489,10 @@ def apple_swift_finalize():
 
 
 def apple_swift_append(key):
+    if not work.config_apple_enabled:
+        return
+    
+    
     text = '        case {0}\n'.format(key)
     
     work.apple_swift_file_object.write(text)
