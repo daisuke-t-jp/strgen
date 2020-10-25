@@ -172,7 +172,7 @@ The default directory will be the same as the YAML file.
 
 #### `google`
 
-##### `enabled` (任意)
+##### `enabled` (Optional)
 
 Enabled flag for generate output files.  
 Default is `true`.
@@ -185,7 +185,7 @@ Default is `strings.xml`.
 
 #### `apple`
 
-##### `enabled` (任意)
+##### `enabled` (Optional)
 
 Enabled flag for generate output files.  
 Default is `true`.
