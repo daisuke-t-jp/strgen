@@ -2,8 +2,10 @@ general:
   input_file_path: ./source.csv
   output_path: ./
 google:
+  enabled: true
   strings_file_name: strings.xml
 apple:
+  enabled: true
   strings_file_name: Localizable.strings
   swift_file_name: LocalizableStrings.swift
   swift_class_name: LocalizableStrings
