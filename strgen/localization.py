@@ -6,7 +6,7 @@ import csv
 
 class Localization:
     def __init__(self):
-        self.localized_map = {}
+        self._localized_map = {}
     
     
     def load(self, path: str):
@@ -22,7 +22,7 @@ class Localization:
                 codes = []
                 for code in header[1:]:
                     codes.append(code)
-                    self.localized_map[code] = {}
+                    self._localized_map[code] = {}
                 
                 # Enumerate key and string.
                 for row in reader:
@@ -35,8 +35,13 @@ class Localization:
                         if len(value) == 0:
                             continue
                         
-                        self.localized_map[code][key] = value
+                        self._localized_map[code][key] = value
 
         except Exception as e:
             print("Can't open file {0}".format(path))
             return
+
+
+    @property
+    def localized_map(self) -> dict:
+        return self._localized_map

@@ -63,7 +63,7 @@ def initialize():
 # Function - Build directory
 # - - - - - - - - - - - - - - - - - - - -
 def build_dir_initialize():
-    path = work.config.path_output_build()
+    path = work.config.path_output_build
     
     if os.path.isdir(path):
         shutil.rmtree(path)
@@ -82,13 +82,13 @@ def main():
 
     if work.config.google_enabled:
         google.write(work.localization.localized_map,
-            work.config.path_output_build_google(),
+            work.config.path_output_build_google,
             work.config.google_strings_file_name)
     
     
     if work.config.apple_enabled:
         apple.write(work.localization.localized_map,
-            work.config.path_output_build_apple(),
+            work.config.path_output_build_apple,
             work.config.apple_strings_file_name,
             work.config.apple_swift_file_name,
             work.config.apple_swift_class_name)

@@ -30,20 +30,18 @@ class Config:
     DEFAULT_APPLE_SWIFT_FILE_NAME = 'LocalizableStrings.swift'
     DEFAULT_APPLE_SWIFT_CLASS_NAME = 'LocalizableStrings'
 
-    DIR_NAME_LPROJ = 'lproj'
-
 
     def __init__(self):
-        self.general_input_file_path = None
-        self.general_output_path = None
+        self._general_input_file_path = None
+        self._general_output_path = None
         
-        self.google_enabled = True
-        self.google_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
+        self._google_enabled = True
+        self._google_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
         
-        self.apple_enabled = True
-        self.apple_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_APPLE
-        self.apple_swift_file_name = self.DEFAULT_APPLE_SWIFT_FILE_NAME
-        self.apple_swift_class_name = self.DEFAULT_APPLE_SWIFT_CLASS_NAME
+        self._apple_enabled = True
+        self._apple_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_APPLE
+        self._apple_swift_file_name = self.DEFAULT_APPLE_SWIFT_FILE_NAME
+        self._apple_swift_class_name = self.DEFAULT_APPLE_SWIFT_CLASS_NAME
 
 
     def load(self, path: str):
@@ -68,21 +66,21 @@ class Config:
         
         
         # Input file path
-        self.general_input_file_path = data.get(self.YAML_KEY_INPUT_FILE_PATH)
-        if self.general_input_file_path is None:
+        self._general_input_file_path = data.get(self.YAML_KEY_INPUT_FILE_PATH)
+        if self._general_input_file_path is None:
             return
         
-        if not os.path.isabs(self.general_input_file_path):
+        if not os.path.isabs(self._general_input_file_path):
             # For relative path, use config file path.
-            self.general_input_file_path = os.path.join(os.path.dirname(path), self.general_input_file_path)
+            self._general_input_file_path = os.path.join(os.path.dirname(path), self._general_input_file_path)
         
         
         # Output path
-        self.general_output_path = data.get(self.YAML_KEY_OUTPUT_PATH) or os.path.dirname(path)
+        self._general_output_path = data.get(self.YAML_KEY_OUTPUT_PATH) or os.path.dirname(path)
         
-        if not os.path.isabs(self.general_output_path):
+        if not os.path.isabs(self._general_output_path):
             # For relative path, use config file path.
-            self.general_output_path = os.path.join(os.path.dirname(path), self.general_output_path)
+            self._general_output_path = os.path.join(os.path.dirname(path), self._general_output_path)
 
 
     def _load_google(self, yaml_data: dict):
@@ -90,8 +88,8 @@ class Config:
         if data is None:
             return
         
-        self.google_enabled = data.get(self.YAML_KEY_ENABLED) or True
-        self.google_strings_file_name = data.get(self.YAML_KEY_STRINGS_FILE_NAME) or self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
+        self._google_enabled = data.get(self.YAML_KEY_ENABLED) or True
+        self._google_strings_file_name = data.get(self.YAML_KEY_STRINGS_FILE_NAME) or self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
 
 
     def _load_apple(self, yaml_data: dict):
@@ -99,20 +97,57 @@ class Config:
         if data is None:
             return
         
-        self.apple_enabled = data.get(self.YAML_KEY_ENABLED) or True
-        self.apple_strings_file_name = data.get(self.YAML_KEY_STRINGS_FILE_NAME) or self.DEFAULT_STRINGS_FILE_NAME_APPLE
-        self.apple_swift_file_name = data.get(self.YAML_KEY_APPLE_SWIFT_FILE_NAME) or self.DEFAULT_APPLE_SWIFT_FILE_NAME
-        self.apple_swift_class_name = data.get(self.YAML_KEY_APPLE_SWIFT_CLASS_NAME) or self.DEFAULT_APPLE_SWIFT_CLASS_NAME
+        self._apple_enabled = data.get(self.YAML_KEY_ENABLED) or True
+        self._apple_strings_file_name = data.get(self.YAML_KEY_STRINGS_FILE_NAME) or self.DEFAULT_STRINGS_FILE_NAME_APPLE
+        self._apple_swift_file_name = data.get(self.YAML_KEY_APPLE_SWIFT_FILE_NAME) or self.DEFAULT_APPLE_SWIFT_FILE_NAME
+        self._apple_swift_class_name = data.get(self.YAML_KEY_APPLE_SWIFT_CLASS_NAME) or self.DEFAULT_APPLE_SWIFT_CLASS_NAME
 
 
+    @property
+    def general_input_file_path(self) -> str:
+        return self._general_input_file_path
+
+
+    @property
+    def google_enabled(self) -> bool:
+        return self._google_enabled
+
+
+    @property
+    def google_strings_file_name(self) -> str:
+        return self._google_strings_file_name
+
+
+    @property
+    def apple_enabled(self) -> bool:
+        return self._apple_enabled
+
+
+    @property
+    def apple_strings_file_name(self) -> str:
+        return self._apple_strings_file_name
+
+
+    @property
+    def apple_swift_file_name(self) -> str:
+        return self._apple_swift_file_name
+
+
+    @property
+    def apple_swift_class_name(self) -> str:
+        return self._apple_swift_class_name
+
+
+    @property
     def path_output_build(self) -> str:
-        return os.path.join(self.general_output_path, self.BUILD_DIR)
+        return os.path.join(self._general_output_path, self.BUILD_DIR)
 
+
+    @property
     def path_output_build_google(self) -> str:
-        return os.path.join(self.path_output_build(), self.NAME_GOOGLE)
+        return os.path.join(self.path_output_build, self.NAME_GOOGLE)
 
+
+    @property
     def path_output_build_apple(self) -> str:
-        return os.path.join(self.path_output_build(), self.NAME_APPLE)
-
-    def path_output_build_apple_strings(self) -> str:
-        return os.path.join(self.path_output_build_apple(), self.DIR_NAME_LPROJ)
+        return os.path.join(self.path_output_build, self.NAME_APPLE)
