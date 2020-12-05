@@ -37,13 +37,13 @@ class Config:
         self.general_input_file_path = None
         self.general_output_path = None
         
-        self.google_enabled = None
-        self.google_strings_file_name = None
+        self.google_enabled = True
+        self.google_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
         
-        self.apple_enabled = None
-        self.apple_strings_file_name = None
-        self.apple_swift_file_name = None
-        self.apple_swift_class_name = None
+        self.apple_enabled = True
+        self.apple_strings_file_name = self.DEFAULT_STRINGS_FILE_NAME_APPLE
+        self.apple_swift_file_name = self.DEFAULT_APPLE_SWIFT_FILE_NAME
+        self.apple_swift_class_name = self.DEFAULT_APPLE_SWIFT_CLASS_NAME
 
 
     def load(self, path: str):
