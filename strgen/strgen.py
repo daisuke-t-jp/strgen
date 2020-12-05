@@ -4,6 +4,7 @@
 import sys
 import os
 import shutil
+import argparse
 import csv
 
 from config import Config
@@ -12,10 +13,23 @@ import google
 import apple
 
 
+
 # - - - - - - - - - - - - - - - - - - - -
 # Constants, Enumeration
 # - - - - - - - - - - - - - - - - - - - -
 YAML_FILE_NAME = 'strgen.yml'
+
+
+
+# - - - - - - - - - - - - - - - - - - - -
+# Arguments
+# - - - - - - - - - - - - - - - - - - - -
+parser = argparse.ArgumentParser()
+parser.add_argument('--config',
+                        default=os.path.join(os.getcwd(), YAML_FILE_NAME),
+                        type=str,
+                        help='configuration yaml file path.')
+args = parser.parse_args()
 
 
 
@@ -35,12 +49,7 @@ work = Work()
 # Function - Initialize
 # - - - - - - - - - - - - - - - - - - - -
 def initialize():
-    config_path = os.path.join(os.getcwd(), YAML_FILE_NAME)
-    
-    if len(sys.argv) > 1:
-        config_path = sys.argv[1]
-    
-    work.config.load(config_path)
+    work.config.load(args.config)
 
     build_dir_initialize()
     
