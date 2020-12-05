@@ -16,7 +16,7 @@ FILE_SUFFIX = '''\
 </resources>
 '''
 
-def write(localized_map, output_path, file_name):
+def write(localized_map: dict, output_path: str, file_name: str):
     for code in localized_map.keys():
         # Create dir.
         dir = os.path.join(output_path, DIR_NAME_PREFIX + code)

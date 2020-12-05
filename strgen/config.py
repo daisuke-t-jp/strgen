@@ -46,23 +46,22 @@ class Config:
         self.apple_swift_class_name = None
 
 
-    def load(self, path):
-        yaml_data = None
-
+    def load(self, path: str):
         # Load configuration
         try:
             with open(path, mode='r') as file:
                 yaml_data = yaml.safe_load(stream=file)
+                
+                self._load_general(path, yaml_data)
+                self._load_google(yaml_data)
+                self._load_apple(yaml_data)
+
         except Exception as e:
             print("Can't open file {0}".format(path))
             return
         
-        self._load_general(path, yaml_data)
-        self._load_google(yaml_data)
-        self._load_apple(yaml_data)
 
-
-    def _load_general(self, path, yaml_data):
+    def _load_general(self, path: str, yaml_data: dict):
         data = yaml_data.get(self.YAML_KEY_GENERAL)
         if data is None:
             return
@@ -86,7 +85,7 @@ class Config:
             self.general_output_path = os.path.join(os.path.dirname(path), self.general_output_path)
 
 
-    def _load_google(self, yaml_data):
+    def _load_google(self, yaml_data: dict):
         data = yaml_data.get(self.YAML_KEY_GOOGLE)
         if data is None:
             return
@@ -95,7 +94,7 @@ class Config:
         self.google_strings_file_name = data.get(self.YAML_KEY_STRINGS_FILE_NAME) or self.DEFAULT_STRINGS_FILE_NAME_GOOGLE
 
 
-    def _load_apple(self, yaml_data):
+    def _load_apple(self, yaml_data: dict):
         data = yaml_data.get(self.YAML_KEY_APPLE)
         if data is None:
             return

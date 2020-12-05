@@ -9,7 +9,7 @@ class Localization:
         self.localized_map = {}
     
     
-    def load(self, path):
+    def load(self, path: str):
         if not os.path.isfile(path):
             return
         

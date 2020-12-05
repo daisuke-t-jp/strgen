@@ -20,12 +20,12 @@ SWIFT_SUFFIX = '''\
 '''
 
 
-def write(localized_map, output_path, strings_file_name, swift_file_name, swift_class_name):
+def write(localized_map: dict, output_path: str, strings_file_name: str, swift_file_name: str, swift_class_name: str):
     _write_strings_file(localized_map, output_path, strings_file_name)
     _write_swift_file(localized_map, output_path, swift_file_name, swift_class_name)
 
 
-def _write_strings_file(localized_map, output_path, strings_file_name):
+def _write_strings_file(localized_map: dict, output_path: str, strings_file_name: str):
     for code in localized_map.keys():
         # Create dir.
         dir = os.path.join(output_path, code + DIR_NAME_SUFFIX)
@@ -49,7 +49,7 @@ def _write_strings_file(localized_map, output_path, strings_file_name):
             return
 
 
-def _write_swift_file(localized_map, output_path, swift_file_name, swift_class_name):
+def _write_swift_file(localized_map: dict, output_path: str, swift_file_name: str, swift_class_name: str):
     file_path = os.path.join(output_path, swift_file_name)
     append_keys = []
     
