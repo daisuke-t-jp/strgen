@@ -46,7 +46,7 @@ The config file.
 ### 2. Run `strgen`
 
 ```sh
-$ strgen strgen.yml 
+$ strgen --config strgen.yml
 ```
 
 Run with argument of YAML file path.  
@@ -95,6 +95,10 @@ There are sample that you can easily try.
 
 [Sample](https://github.com/daisuke-t-jp/strgen/tree/master/sample)
 
+1. Install `strgen`
+    ```sh
+    $ pip install strgen
+    ```
 1. Clone project.
     ```sh
     $ git clone https://github.com/daisuke-t-jp/strgen 
@@ -102,7 +106,7 @@ There are sample that you can easily try.
 1. Change the current directory to `strgen/sample`.
 1. Run
     ```sh
-    $ strgen strgen.yml 
+    $ strgen --config strgen.yml
     ```
 1. Check `build` folder.
 
