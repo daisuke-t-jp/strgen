@@ -5,6 +5,7 @@ import os
 
 
 # Constants, Enumeration
+DIR_NAME_LPROJ = 'lproj'
 DIR_NAME_SUFFIX = '.lproj'
 SWIFT_PREFIX = '''\
 import Foundation
@@ -28,7 +29,7 @@ def write(localized_map: dict, output_path: str, strings_file_name: str, swift_f
 def _write_strings_file(localized_map: dict, output_path: str, strings_file_name: str):
     for code in localized_map.keys():
         # Create dir.
-        dir = os.path.join(output_path, code + DIR_NAME_SUFFIX)
+        dir = os.path.join(os.path.join(output_path, DIR_NAME_LPROJ), code + DIR_NAME_SUFFIX)
         os.makedirs(dir)
         
         
