@@ -3,7 +3,7 @@
 
 import os
 
-import util
+from strgen import util
 
 
 # Constants, Enumeration
