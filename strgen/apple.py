@@ -45,8 +45,7 @@ def _write_strings_file(localized_map: dict, output_path: str, strings_file_name
                     file.write(text)
             
         except Exception as e:
-            print("Can't open file {0}".format(file_path))
-            return
+            raise e
 
 
 def _write_swift_file(localized_map: dict, output_path: str, swift_file_name: str, swift_class_name: str):
@@ -72,6 +71,5 @@ def _write_swift_file(localized_map: dict, output_path: str, swift_file_name: st
             file.write(SWIFT_SUFFIX)
 
     except Exception as e:
-        print("Can't open file {0}".format(file_path))
-        return
+        raise e
 

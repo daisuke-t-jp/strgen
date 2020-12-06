@@ -38,6 +38,6 @@ def write(localized_map: dict, output_path: str, file_name: str):
                     file.write(text)
                 
                 file.write(FILE_SUFFIX)
+
         except Exception as e:
-            print("Can't open file {0}".format(file_path))
-            return
+            raise e

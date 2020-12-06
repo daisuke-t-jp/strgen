@@ -46,30 +46,31 @@ class Config:
 
     def load(self, path: str):
         # Load configuration
+        yaml_data = {}
+        
         try:
             with open(path, mode='r') as file:
                 yaml_data = yaml.safe_load(stream=file)
-                
-                self._load_general(path, yaml_data)
-                self._load_google(yaml_data)
-                self._load_apple(yaml_data)
-
-        except Exception as e:
-            print("Can't open file {0}".format(path))
-            return
+        except FileNotFoundError as e:
+            raise e
         
+        
+        self._load_general(path, yaml_data)
+        self._load_google(yaml_data)
+        self._load_apple(yaml_data)
+
 
     def _load_general(self, path: str, yaml_data: dict):
         data = yaml_data.get(self.YAML_KEY_GENERAL)
         if data is None:
-            return
+            raise KeyError('\'general\' key no found in config file.')
         
         
         # Input file path
         self._general_input_file_path = data.get(self.YAML_KEY_INPUT_FILE_PATH)
         if self._general_input_file_path is None:
-            return
-        
+            raise KeyError('\'general\'[\'input_file_path\'] key no found in config file.')
+
         if not os.path.isabs(self._general_input_file_path):
             # For relative path, use config file path.
             self._general_input_file_path = os.path.join(os.path.dirname(path), self._general_input_file_path)
@@ -77,7 +78,6 @@ class Config:
         
         # Output path
         self._general_output_path = data.get(self.YAML_KEY_OUTPUT_PATH) or os.path.dirname(path)
-        
         if not os.path.isabs(self._general_output_path):
             # For relative path, use config file path.
             self._general_output_path = os.path.join(os.path.dirname(path), self._general_output_path)

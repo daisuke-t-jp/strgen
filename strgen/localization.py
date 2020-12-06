@@ -10,9 +10,6 @@ class Localization:
     
     
     def load(self, path: str):
-        if not os.path.isfile(path):
-            return
-        
         try:
             with open(path, mode='r') as file:
                 # Enumerate codes.
@@ -37,9 +34,8 @@ class Localization:
                         
                         self._localized_map[code][key] = value
 
-        except Exception as e:
-            print("Can't open file {0}".format(path))
-            return
+        except FileNotFoundError as e:
+            raise e
 
 
     @property
