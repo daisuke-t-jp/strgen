@@ -7,10 +7,10 @@ import shutil
 import argparse
 import csv
 
-from config import Config
-from localization import Localization
-import google
-import apple
+from strgen.config import Config
+from strgen.localization import Localization
+from strgen import google
+from strgen import apple
 
 
 
