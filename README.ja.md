@@ -46,7 +46,7 @@ $ pip install strgen
 ### 2. `strgen` を実行
 
 ```sh
-$ strgen strgen.yml 
+$ strgen --config strgen.yml
 ```
 
 YAML ファイルを引数にして、実行します。  
@@ -95,6 +95,10 @@ class LocalizableStrings {
 
 [サンプル](https://github.com/daisuke-t-jp/strgen/tree/master/sample)
 
+1. `strgen` をインストールします。
+    ```sh
+    $ pip install strgen
+    ```
 1. プロジェクトを clone します。
     ```sh
     $ git clone https://github.com/daisuke-t-jp/strgen
@@ -102,7 +106,7 @@ class LocalizableStrings {
 1. カレントディレクトリを `strgen/sample` フォルダに変更します。
 1. 以下のコマンドを実行。
     ```sh
-    $ strgen strgen.yml 
+    $ strgen --config strgen.yml
     ```
 1. `build` フォルダを確認します。
 
